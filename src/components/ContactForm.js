@@ -3,11 +3,30 @@ import { useForm } from "react-hook-form";
 
 const ContactForm = () => {
   const [data, setData] = useState();
+
+  const [values, setValues] = useState(
+    {
+      firstName: '1',
+      lastName: '2',
+      email: '3',
+      message: '4'
+    }
+  );
+
   const { register, errors, handleSubmit, reset } = useForm({
     mode: "onBlur"
   });
+
+  const handleChanges = e => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value
+    })
+  }
+
   const onSubmit = data => {
     setData(data);
+    reset();
   };
 
   return (
@@ -16,9 +35,11 @@ const ContactForm = () => {
         <div>
           <label htmlFor="firstName">First Name*</label>
           <input
+            id="firstName"
             name="firstName"
-            placeholder="bill"
-            ref={register({ required: true, maxLength: 3 })}
+            placeholder="justin"
+            onChange={e => handleChanges(e)}
+            ref={register({ required: true, minLength: 2 })}
           />
           {errors.firstName && (
             <p>Looks like there was an error: {errors.firstName.type}</p>
@@ -28,9 +49,11 @@ const ContactForm = () => {
         <div>
           <label htmlFor="lastName">Last Name*</label>
           <input
+            id="lastName"
             name="lastName"
-            placeholder="luo"
-            ref={register({ required: true })}
+            placeholder="time"
+            onChange={e => handleChanges(e)}
+            ref={register({ required: true, minLength: 2 })}
           />
           {errors.lastName && (
             <p>Looks like there was an error: {errors.lastName.type}</p>
@@ -38,24 +61,35 @@ const ContactForm = () => {
         </div>
 
         <div>
-          <label htmlFor="email" placeholder="bluebill1049@hotmail.com">
+          <label htmlFor="email">
             Email*
           </label>
-          <input name="email" ref={register({ required: true })} />
+          <input
+            id="email"
+            placeholder="email@mail.com"
+            name="email"
+            onChange={e => handleChanges(e)}
+            ref={register({ required: true })}
+          />
           {errors.email && (
             <p>Looks like there was an error: {errors.email.type}</p>
           )}
         </div>
         <div>
           <label htmlFor="message">Message</label>
-          <textarea name="message" ref={register({ required: false })} />
+          <textarea
+            id="message"
+            name="message"
+            onChange={e => handleChanges(e)}
+            ref={register({ required: false })}
+          />
         </div>
         {data && (
           <pre style={{ textAlign: "left", color: "white" }}>
             {JSON.stringify(data, null, 2)}
           </pre>
         )}
-        <input type="submit" />
+        <input title="submit" type="submit" />
       </form>
     </div>
   );
