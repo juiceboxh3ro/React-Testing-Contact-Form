@@ -26,6 +26,14 @@ const ContactForm = () => {
 
   const onSubmit = data => {
     setData(data);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://reqres.in/api/users', true)
+    xhr.onload = function(){
+      console.log(xhr.responseText);
+    };
+    xhr.send(JSON.stringify(data));
+
     reset();
   };
 

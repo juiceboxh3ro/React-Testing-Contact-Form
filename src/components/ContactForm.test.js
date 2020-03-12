@@ -10,7 +10,6 @@ test("input form submits", () => {
   emailInput = getByLabelText(/email/i),
   message = getByLabelText(/message/i),
   submitButton = getByTitle(/submit/i);
-  ;
 
   fireEvent.change(fnameInput, {target: {name: 'firstName', value: 'jeff'}})
   fireEvent.change(lnameInput, {target: {name: 'lastName', value: 'jeffington'}})
